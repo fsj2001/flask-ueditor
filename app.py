@@ -23,6 +23,7 @@ def upload():
     config 配置文件
     result 返回结果
     """
+    mimetype = 'application/json'
     result = {}
     action = request.args.get('action')
 
@@ -124,10 +125,13 @@ def upload():
     if 'callback' in request.args:
         callback = request.args.get('callback')
         if re.match(r'^[\w_]+$', callback):
-            return '%s(%s)' % (callback, result)
-        return json.dumps({'state': 'callback参数不合法'})
+            result = '%s(%s)' % (callback, result)
+            mimetype = 'application/javascript'
+        else:
+            result = json.dumps({'state': 'callback参数不合法'})
 
     res = make_response(result)
+    res.mimetype = mimetype
     res.headers['Access-Control-Allow-Origin'] = '*'
     res.headers['Access-Control-Allow-Headers'] = 'X-Requested-With,X_Requested_With'
     return res
