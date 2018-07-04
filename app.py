@@ -11,9 +11,13 @@ from uploader import Uploader
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    content=""
+    if request.method == 'POST':
+        content= request.form["editor"]
+        print(content)
+    return render_template('index.html',content=content)
 
 
 @app.route('/upload/', methods=['GET', 'POST', 'OPTIONS'])
@@ -138,4 +142,4 @@ def upload():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,port=5002)
