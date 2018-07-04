@@ -24458,13 +24458,19 @@ UE.plugin.register('simpleupload', function (){
                 me.focus();
                 me.execCommand('inserthtml', '<img class="loadingclass" id="' + loadingId + '" src="' + me.options.themePath + me.options.theme +'/images/spacer.gif" title="' + (me.getLang('simpleupload.loading') || '') + '" >');
 
+                function getNowHost(){
+                    var host = window.localtion.host;
+                    return host;
+                }
+
                 function callback(){
                     try{
                         var link, json, loader,
                             body = (iframe.contentDocument || iframe.contentWindow.document).body,
                             result = body.innerText || body.textContent || '';
                         json = (new Function("return " + result))();
-                        link = me.options.imageUrlPrefix + json.url;
+                        // link = me.options.imageUrlPrefix + json.url;
+                        link = "http://" + getNowHost() + json.url;
                         if(json.state == 'SUCCESS' && json.url) {
                             loader = me.document.getElementById(loadingId);
                             loader.setAttribute('src', link);
