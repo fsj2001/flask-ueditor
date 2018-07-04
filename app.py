@@ -10,6 +10,9 @@ from uploader import Uploader
 
 app = Flask(__name__)
 
+@app.route('/base')
+def base():
+    return  render_template('base.html')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -17,7 +20,7 @@ def index():
     if request.method == 'POST':
         content= request.form["editor"]
         print(content)
-    return render_template('index.html',content=content)
+    return render_template('ueditor.html', content=content)
 
 
 @app.route('/upload/', methods=['GET', 'POST', 'OPTIONS'])
