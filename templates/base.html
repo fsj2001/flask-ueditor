@@ -692,15 +692,12 @@
 						</div><!-- #nav-search -->
 					</div>
 
-					<div class="page-content">
 
+					<div class="page-content">
 
 						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
-
-
-
 								<div class="alert alert-block alert-success">
 									<button type="button" class="close" data-dismiss="alert">
 										<i class="icon-remove"></i>
@@ -716,6 +713,7 @@
 									,轻量级好用的文本编辑器.
 								</div>
                                 {% block main %}
+
 								<div class="row">
 									<div class="space-6"></div>
 
@@ -1823,12 +1821,13 @@
 										</div><!-- /widget-box -->
 									</div><!-- /span -->
 								</div><!-- /row -->
-
-								{% endblock %}
+                                {% endblock %}
                                 <!-- PAGE CONTENT ENDS -->
 							</div><!-- /.col -->
 						</div><!-- /.row -->
+
 					</div><!-- /.page-content -->
+
 				</div><!-- /.main-content -->
 
 				<div class="ace-settings-container" id="ace-settings-container">
@@ -1889,12 +1888,12 @@
 
 		<!--[if !IE]> -->
 
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+		<script src="https://cdn.static.runoob.com/libs/jquery/2.0.3/jquery.min.js"></script>
 
 		<!-- <![endif]-->
 
 		<!--[if IE]>
-{#		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>#}
+		<script src="https://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
 		<![endif]-->
 
 		<!--[if !IE]> -->
@@ -1923,22 +1922,25 @@
 		  <script src="/static/assets/js/excanvas.min.js"></script>
 		<![endif]-->
 
+    {% block page_script %}
 		<script src="/static/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
 		<script src="/static/assets/js/jquery.ui.touch-punch.min.js"></script>
 		<script src="/static/assets/js/jquery.slimscroll.min.js"></script>
 		<script src="/static/assets/js/jquery.easy-pie-chart.min.js"></script>
 		<script src="/static/assets/js/jquery.sparkline.min.js"></script>
-		<script src="/static/assets/js/flot/jquery.flot.min.js"></script>
-		<script src="/static/assets/js/flot/jquery.flot.pie.min.js"></script>
-		<script src="/static/assets/js/flot/jquery.flot.resize.min.js"></script>
 
-		<!-- ace scripts -->
+
+
+
+		<!-- inline scripts related to this page -->
+        <!-- ace scripts -->
+
 
 		<script src="/static/assets/js/ace-elements.min.js"></script>
 		<script src="/static/assets/js/ace.min.js"></script>
-
-		<!-- inline scripts related to this page -->
-
+		<script src="/static/assets/js/flot/jquery.flot.min.js"></script>
+		<script src="/static/assets/js/flot/jquery.flot.pie.min.js"></script>
+		<script src="/static/assets/js/flot/jquery.flot.resize.min.js"></script>
 		<script type="text/javascript">
 			jQuery(function($) {
 				$('.easy-pie-chart.percentage').each(function(){
@@ -1956,16 +1958,16 @@
 						size: size
 					});
 				})
-			
+
 				$('.sparkline').each(function(){
 					var $box = $(this).closest('.infobox');
 					var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
 					$(this).sparkline('html', {tagValuesAttribute:'data-values', type: 'bar', barColor: barColor , chartRangeMin:$(this).data('min') || 0} );
 				});
-			
-			
-			
-			
+
+
+
+
 			  var placeholder = $('#piechart-placeholder').css({'width':'90%' , 'min-height':'150px'});
 			  var data = [
 				{ label: "social networks",  data: 38.7, color: "#68BC31"},
@@ -1992,7 +1994,7 @@
 					},
 					legend: {
 						show: true,
-						position: position || "ne", 
+						position: position || "ne",
 						labelBoxBorderColor: null,
 						margin:[-30,15]
 					}
@@ -2004,19 +2006,19 @@
 				 })
 			 }
 			 drawPieChart(placeholder, data);
-			
+
 			 /**
 			 we saved the drawing function and the data to redraw with different position later when switching to RTL mode dynamically
 			 so that's not needed actually.
 			 */
 			 placeholder.data('chart', data);
 			 placeholder.data('draw', drawPieChart);
-			
-			
-			
+
+
+
 			  var $tooltip = $("<div class='tooltip top in'><div class='tooltip-inner'></div></div>").hide().appendTo('body');
 			  var previousPoint = null;
-			
+
 			  placeholder.on('plothover', function (event, pos, item) {
 				if(item) {
 					if (previousPoint != item.seriesIndex) {
@@ -2029,30 +2031,30 @@
 					$tooltip.hide();
 					previousPoint = null;
 				}
-				
+
 			 });
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
 				var d1 = [];
 				for (var i = 0; i < Math.PI * 2; i += 0.5) {
 					d1.push([i, Math.sin(i)]);
 				}
-			
+
 				var d2 = [];
 				for (var i = 0; i < Math.PI * 2; i += 0.5) {
 					d2.push([i, Math.cos(i)]);
 				}
-			
+
 				var d3 = [];
 				for (var i = 0; i < Math.PI * 2; i += 0.2) {
 					d3.push([i, Math.tan(i)]);
 				}
-				
-			
+
+
 				var sales_charts = $('#sales-charts').css({'width':'100%' , 'height':'220px'});
 				$.plot("#sales-charts", [
 					{ label: "Domains", data: d1 },
@@ -2080,28 +2082,28 @@
 						borderColor:'#555'
 					}
 				});
-			
-			
+
+
 				$('#recent-box [data-rel="tooltip"]').tooltip({placement: tooltip_placement});
 				function tooltip_placement(context, source) {
 					var $source = $(source);
 					var $parent = $source.closest('.tab-content')
 					var off1 = $parent.offset();
 					var w1 = $parent.width();
-			
+
 					var off2 = $source.offset();
 					var w2 = $source.width();
-			
+
 					if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
 					return 'left';
 				}
-			
-			
+
+
 				$('.dialogs,.comments').slimScroll({
 					height: '300px'
 			    });
-				
-				
+
+
 				//Android's default browser somehow is confused when tapping on label which will lead to dragging the task
 				//so disable dragging when clicking on label
 				var agent = navigator.userAgent.toLowerCase();
@@ -2112,7 +2114,7 @@
 					var label = li.find('label.inline').get(0);
 					if(label == e.target || $.contains(label, e.target)) e.stopImmediatePropagation() ;
 				});
-			
+
 				$('#tasks').sortable({
 					opacity:0.8,
 					revert:true,
@@ -2130,10 +2132,11 @@
 					if(this.checked) $(this).closest('li').addClass('selected');
 					else $(this).closest('li').removeClass('selected');
 				});
-				
-			
+
+
 			})
 		</script>
+    {% endblock %}
 </body>
 </html>
 

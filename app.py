@@ -23,6 +23,14 @@ def index():
     return render_template('ueditor.html', content=content)
 
 
+@app.route('/test', methods=['GET', 'POST'])
+def test():
+    content=""
+    if request.method == 'POST':
+        content= request.form["editor"]
+        print(content)
+    return render_template('test.html', content=content)
+
 @app.route('/upload/', methods=['GET', 'POST', 'OPTIONS'])
 def upload():
     """UEditor文件上传接口
