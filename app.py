@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import os
+import os,sys
 import re
 import json
 
 from flask import Flask, request, render_template, url_for, make_response
 
 from uploader import Uploader
+
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 app = Flask(__name__)
 
