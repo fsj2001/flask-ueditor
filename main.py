@@ -5,7 +5,7 @@ import re
 import json
 
 from flask import Flask, request, render_template, url_for, make_response
-
+from config import DevConfig
 from uploader import Uploader
 
 
@@ -14,26 +14,31 @@ sys.setdefaultencoding('utf-8')
 
 app = Flask(__name__)
 
+# 使用config.from_object() 而不使用 app.config['DEBUG'] 是因为这样可以加载 class DevConfig 的配置变量集合，而不需要一项一项的添加和修改。
+app.config.from_object(DevConfig)
+
 @app.route('/base')
 def base():
     return  render_template('base.html')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    content=""
     if request.method == 'POST':
-        content= request.form["editor"]
-        print(content)
-    return render_template('ueditor.html', content=content)
+        content= request.form["content"]
+        title= request.form["title"]
+        print content,title
+        return render_template('blog.html', content=content, title=title)
+    return render_template('ueditor.html')
 
 
 @app.route('/test', methods=['GET', 'POST'])
 def test():
-    content=""
+    content=title=""
     if request.method == 'POST':
-        content= request.form["editor"]
+        content= request.form["content"]
+        title= request.form["title"]
         print(content)
-    return render_template('test.html', content=content)
+    return render_template('test.html', content=content,title=title)
 
 @app.route('/upload/', methods=['GET', 'POST', 'OPTIONS'])
 def upload():
@@ -155,6 +160,16 @@ def upload():
     res.headers['Access-Control-Allow-Headers'] = 'X-Requested-With,X_Requested_With'
     return res
 
+
+@app.route('/400')
+def error():
+    return '<h1>Bad Request</h1>',400
+
+@app.route('/cookies')
+def cookies():
+    response = make_response('<h1>This document carries a cookies!</h1>')
+    response.set_cookie('answer','42')
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True,port=5001,host='0.0.0.0')

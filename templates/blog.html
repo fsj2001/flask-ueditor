@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/assets/js/jquery-2.0.3.min.js"></script>
+</head>
+<body>
+
+<p>{{ title }}</p>
+
+
+<p id="l" >{{ content }}</p>
+
+<script type="application/javascript">
+        $(document).ready(function(){
+            var a = $("#l").text();
+            $("#l").html(a)
+        });
+</script>
+</body>
+</html>
